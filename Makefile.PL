@@ -3,7 +3,7 @@ use warnings;
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-	NAME                => 'HTML-Widget-Plugin-',
+	NAME                => 'HTML-Widget-Plugin-Struct',
 	AUTHOR              => 'Ricardo SIGNES <rjbs@cpan.org>',
 	VERSION_FROM        => 'lib/HTML/Widget/Plugin/Struct.pm',
 	PL_FILES            => {},

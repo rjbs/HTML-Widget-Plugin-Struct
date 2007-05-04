@@ -7,6 +7,8 @@ use base qw(HTML::Widget::Plugin);
 
 use Scalar::Util ();
 
+our $VERSION = '0.001';
+
 sub provided_widgets { qw(struct) }
 
 sub struct {
@@ -25,8 +27,10 @@ sub struct {
 sub _build_struct {
   my ($self, $factory, $arg, $ref_stack) = @_;
 
+  return '' unless defined $arg->{value};
+
   Carp::croak "looping data structure detected while dumping struct"
-    if ref $_
+    if ref $arg->{value}
     and grep { $_ == Scalar::Util::refaddr($arg->{value}) } @$ref_stack;
 
   $self->_assert_value_ok($arg->{value});
@@ -44,28 +48,44 @@ sub _build_struct {
 
   if (ref $arg->{value} eq 'HASH') {
     my $widget = '';
+    push @$ref_stack, Scalar::Util::refaddr($arg->{value});
     for my $key (keys %{ $arg->{value} }) {
-      $widget .= $factory->struct({
-        name  => "$arg->{attr}{name}.$key",
-        ($has_id ? (id => "$arg->{attr}{id}.$key") : ()),
-        value => $arg->{value}{$key},
-        class => $arg->{attr}{class},
-      });
+      $widget .= $self->_build_struct(
+        $factory,
+        {
+          value => $arg->{value}{$key},
+          attr  => {
+            ($has_id ? (id => "$arg->{attr}{id}.$key") : ()),
+            name  => "$arg->{attr}{name}.$key",
+            class => $arg->{attr}{class},
+          },
+        },
+        $ref_stack,
+      );
     }
+    pop @$ref_stack;
     return $widget;
   }
 
   if (ref $arg->{value} eq 'ARRAY') {
     my $widget = '';
+    push @$ref_stack, Scalar::Util::refaddr($arg->{value});
     for my $index (0 .. $#{ $arg->{value} }) {
       next unless defined $arg->{value}[$index];
-      $widget .= $factory->struct({
-        name  => "$arg->{attr}{name}.$index",
-        ($has_id ? (id => "$arg->{attr}{id}.$index") : ()),
-        value => $arg->{value}[$index],
-        class => $arg->{attr}{class},
-      });
+      $widget .= $self->_build_struct(
+        $factory,
+        {
+          value => $arg->{value}[$index],
+          attr  => {
+            name  => "$arg->{attr}{name}.$index",
+            ($has_id ? (id => "$arg->{attr}{id}.$index") : ()),
+            class => $arg->{attr}{class},
+          },
+        },
+        $ref_stack,
+      );
     }
+    pop @$ref_stack;
     return $widget;
   }
 }
