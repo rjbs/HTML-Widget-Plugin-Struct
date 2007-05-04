@@ -1,0 +1,8 @@
+
+README for HTML-Widget-Plugin-Struct
+
+This module provide an HTML::Widget::Factory plugin for dumping deep structs,
+so that they can later be reconstituted with CGI::Expand.
+
+Please see the POD.
+
