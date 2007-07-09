@@ -105,19 +105,19 @@ use Test::WidgetFactory;
   my @pairs = (
     'hero.0'           => 'hands',
     'hero.1'           => 'feet',
-    'hero.2.shoulders' => 'broad',
     'hero.2.eyes'      => 'black as pitch',
+    'hero.2.shoulders' => 'broad',
     'hero.3.0'         => 'tall',
     'hero.3.1'         => 'dark',
     'hero.3.2'         => 'handsome',
     'hero.3.3.temper'  => 'latin',
   );
 
-  my @elements = grep { ref $_ } $tree->guts;
+  my @elements = sort { $a->attr('name') cmp $b->attr('name') }
+                 grep { ref $_ } $tree->guts;
 
   is(@elements, @pairs / 2, "there are as many elements as we expected");
 
-  # for my $element (@elements) {
   is($tree->content_list,  2, "there are two html elements");
 
   my $e = 0;

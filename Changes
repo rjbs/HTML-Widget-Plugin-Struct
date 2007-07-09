@@ -1,5 +1,8 @@
 Revision history for HTML-Widget-Plugin-Struct
 
+0.003     2007-07-09
+          fix a test that relied on hash ordering
+
 0.002     2007-05-04
           add a changelog
 
