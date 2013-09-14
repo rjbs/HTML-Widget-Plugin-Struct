@@ -1,23 +1,8 @@
-
 use strict;
 use warnings;
-
 package HTML::Widget::Plugin::Struct;
-use base qw(HTML::Widget::Plugin);
-
-=head1 NAME
-
-HTML::Widget::Plugin::Struct - dump data structures for CGI::Expand expansion
-
-=head1 VERSION
-
-version 0.003
-
-  $Id$
-
-=cut
-
-our $VERSION = '0.003';
+use parent qw(HTML::Widget::Plugin);
+# ABSTRACT: dump data structures for CGI::Expand expansion
 
 =head1 DESCRIPTION
 
@@ -28,9 +13,7 @@ to hidden widgets which can then be reconstructed by L<CGI::Expand>.
 
 use Scalar::Util ();
 
-=head1 METHODS
-
-=head2 provided_widgets
+=method provided_widgets
 
 This plugin provides the following widgets: struct
 
@@ -38,7 +21,7 @@ This plugin provides the following widgets: struct
 
 sub provided_widgets { qw(struct) }
 
-=head2 struct
+=method struct
 
 C<struct> is the only widget provided by this plugin.  It accepts four
 arguments:
@@ -169,16 +152,8 @@ sub _assert_value_ok {
 
 =head1 TODO
 
- * improve the test suite
-
-=head1 AUTHOR
-
-Ricardo SIGNES <C<rjbs @ cpan.org>>
-
-=head1 COPYRIGHT
-
-Copyright (C) 2007, Ricardo SIGNES.  This is free software, released under the
-same terms as perl itself.
+=for :list
+* improve the test suite
 
 =cut
 
