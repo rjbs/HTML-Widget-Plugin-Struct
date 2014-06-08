@@ -7,12 +7,15 @@ use base qw(Exporter);
 
 use HTML::TreeBuilder;
 use HTML::Widget::Factory;
+use HTML::Widget::Plugin::Struct;
 
 our @EXPORT = qw(widget);
 
 my $FACTORY;
 sub factory {
-  return $FACTORY ||= HTML::Widget::Factory->new;
+  return $FACTORY ||= HTML::Widget::Factory->new({
+    extra_plugins => [ "HTML::Widget::Plugin::Struct" ],
+  });
 }
 
 sub widget {

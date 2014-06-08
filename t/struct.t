@@ -2,10 +2,7 @@
 use strict;
 use warnings;
 
-use Test::More tests => 43;
-
-BEGIN { use_ok("HTML::Widget::Factory"); }
-BEGIN { use_ok("HTML::Widget::Plugin::Struct"); }
+use Test::More tests => 41;
 
 use lib 't/lib';
 use Test::WidgetFactory;
@@ -16,7 +13,7 @@ use Test::WidgetFactory;
     value => 'minty',
     class => 'orange',
   });
-  
+
   my ($input) = $tree->look_down(_tag => 'input');
 
   isa_ok($input, 'HTML::Element');
@@ -53,7 +50,7 @@ use Test::WidgetFactory;
   });
 
   is($tree->content_list,  2, "there are two html elements");
-  
+
   my ($feet, $hands) = sort { $a->attr('name') cmp $b->attr('name') }
                        $tree->look_down(_tag => 'input');
 
@@ -77,7 +74,7 @@ use Test::WidgetFactory;
   });
 
   is($tree->content_list,  2, "there are two html elements");
-  
+
   my (@pains) = $tree->look_down(_tag => 'input');
 
   isa_ok($_,  'HTML::Element') for @pains;

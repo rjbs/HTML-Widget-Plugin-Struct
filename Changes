@@ -1,6 +1,7 @@
 Revision history for HTML-Widget-Plugin-Struct
 
 {{$NEXT}}
+        - update tests for newer HTML::Widget::Factory
 
 0.004     2013-09-14 18:32:02 America/New_York
         - update bugtracker, repo
