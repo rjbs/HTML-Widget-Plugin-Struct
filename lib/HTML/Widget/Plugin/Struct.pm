@@ -1,8 +1,9 @@
 use strict;
 use warnings;
 package HTML::Widget::Plugin::Struct;
-use parent qw(HTML::Widget::Plugin);
 # ABSTRACT: dump data structures for CGI::Expand expansion
+
+use parent qw(HTML::Widget::Plugin);
 
 =head1 DESCRIPTION
 
